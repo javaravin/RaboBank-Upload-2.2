@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <Properties>
+    <Property name="log-path">${user.home}</Property>
+  </Properties>
+
+  <Appenders>
+
+    <!-- Console Appender -->
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout
+        pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} -  %M:%L >> %msg%n"/>
+    </Console>
+    <RollingFile name="RollingFileAppender" fileName="${log-path}/rabobank.log"
+      filePattern="${log-path}/$${date:yyyy-MM}/cclp-config-%d{MM-dd-yyyy}-%i.log.zip">
+      <PatternLayout
+        pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %M:%L >>  %msg%n "/>
+      <Policies>
+        <OnStartupTriggeringPolicy/>
+        <TimeBasedTriggeringPolicy/>
+        <SizeBasedTriggeringPolicy size="50 MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="20"/>
+    </RollingFile>
+
+  </Appenders>
+  <Loggers>
+    <Root level="trace">
+      <AppenderRef ref="RollingFileAppender"/>
+    </Root>
+  </Loggers>
+</Configuration>
